@@ -223,52 +223,41 @@
   </main>
 
   <script>
-    // 1. Funcionalidad de Me Gusta
-    const likeBtn = document.querySelector('.like-btn');
-    const likeCount = document.querySelector('.like-count');
-    let likes = 0;
-    let isLiked = false;
+ <script>
+  // 1. Cargar comentarios guardados al abrir la página
+  document.addEventListener('DOMContentLoaded', cargarComentarios);
 
-    likeBtn.addEventListener('click', () => {
-      if (!isLiked) {
-        likes++;
-        isLiked = true;
-        likeBtn.classList.add('liked');
-      } else {
-        likes--;
-        isLiked = false;
-        likeBtn.classList.remove('liked');
-      }
-      likeCount.textContent = likes;
-    });
+  const sendCommentBtn = document.querySelector('.send-comment-btn');
+  const commentInput = document.querySelector('.comment-input');
+  const commentsList = document.querySelector('.comments-list');
 
-    // 2. Mostrar/Ocultar Sección de Comentarios
-    const commentBtn = document.querySelector('.comment-btn');
-    const commentsSection = document.querySelector('.comments-section');
+  // Guardar comentario
+  sendCommentBtn.addEventListener('click', () => {
+    const text = commentInput.value.trim();
+    if (text !== '') {
+      agregarComentarioAInterfaz(text);
+      guardarEnLocalStorage(text);
+      commentInput.value = '';
+    }
+  });
 
-    commentBtn.addEventListener('click', () => {
-      if (commentsSection.style.display === 'block') {
-        commentsSection.style.display = 'none';
-      } else {
-        commentsSection.style.display = 'block';
-      }
-    });
+  function agregarComentarioAInterfaz(texto) {
+    const newComment = document.createElement('div');
+    newComment.classList.add('comment-item');
+    newComment.innerHTML = `<strong>@usuario:</strong> ${texto}`;
+    commentsList.appendChild(newComment);
+  }
 
-    // 3. Agregar un Comentario Nuevo
-    const sendCommentBtn = document.querySelector('.send-comment-btn');
-    const commentInput = document.querySelector('.comment-input');
-    const commentsList = document.querySelector('.comments-list');
+  function guardarEnLocalStorage(texto) {
+    let comentarios = JSON.parse(localStorage.getItem('comentarios_drako')) || [];
+    comentarios.push(texto);
+    localStorage.setItem('comentarios_drako', JSON.stringify(comentarios));
+  }
 
-    sendCommentBtn.addEventListener('click', () => {
-      const text = commentInput.value.trim();
-      if (text !== '') {
-        const newComment = document.createElement('div');
-        newComment.classList.add('comment-item');
-        newComment.innerHTML = `<strong>@usuario:</strong> ${text}`;
-        commentsList.appendChild(newComment);
-        commentInput.value = ''; // Limpiar el campo
-      }
-    });
+  function cargarComentarios() {
+    let comentarios = JSON.parse(localStorage.getItem('comentarios_drako')) || [];
+    comentarios.forEach(texto => agregarComentarioAInterfaz(texto));
+  }
   </script>
 
 </body>
