@@ -129,8 +129,9 @@
       color: #ef233c;
     }
 
-    /* Caja de comentarios VISIBLE */
+    /* Oculto por defecto, se activa con el botón de comentar */
     .comments-section {
+      display: none;
       margin-top: 14px;
       border-top: 1px dashed #4a0e17;
       padding-top: 12px;
@@ -213,11 +214,12 @@
         Construyendo mi propio espacio web desde cero. Código, estética roja y libertad total sin depender de nadie. 🩸✨
       </div>
       <div class="post-actions">
-        <button class="action-btn like-btn">♥ <span class="like-count">0</span> Me gusta</button>
+        <button class="action-btn" id="likeBtn">♥ <span id="likeCount">0</span> Me gusta</button>
+        <button class="action-btn" id="toggleCommentBtn">💬 Comentar</button>
       </div>
 
       <!-- Sección de Comentarios -->
-      <div class="comments-section">
+      <div class="comments-section" id="commentsSection">
         <div class="comments-list" id="commentsList"></div>
         <div class="comment-input-box">
           <input type="text" id="commentInput" placeholder="Escribe un comentario...">
@@ -229,17 +231,40 @@
   </main>
 
   <script>
+    // Elementos del DOM
+    const likeBtn = document.getElementById('likeBtn');
+    const likeCount = document.getElementById('likeCount');
+    const toggleCommentBtn = document.getElementById('toggleCommentBtn');
+    const commentsSection = document.getElementById('commentsSection');
     const sendBtn = document.getElementById('sendBtn');
     const commentInput = document.getElementById('commentInput');
     const commentsList = document.getElementById('commentsList');
 
-    // 1. Cargar comentarios al iniciar la página
+    // 1. Botón de Me Gusta (Suma y Resta)
+    let likes = 0;
+    let liked = false;
+
+    likeBtn.addEventListener('click', () => {
+      liked = !liked;
+      likes = liked ? likes + 1 : likes - 1;
+      likeCount.textContent = likes;
+      likeBtn.classList.toggle('liked', liked);
+    });
+
+    // 2. Botón de Comentar (Abre y Cierra el menú desplegable)
+    toggleCommentBtn.addEventListener('click', () => {
+      if (commentsSection.style.display === 'block') {
+        commentsSection.style.display = 'none';
+      } else {
+        commentsSection.style.display = 'block';
+      }
+    });
+
+    // 3. Sistema de Comentarios LocalStorage
     window.addEventListener('DOMContentLoaded', cargarComentarios);
 
-    // 2. Guardar al hacer clic en "Enviar"
     sendBtn.addEventListener('click', publicarComentario);
 
-    // 3. Guardar también si presiona la tecla "Enter"
     commentInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         publicarComentario();
@@ -272,19 +297,6 @@
       let lista = JSON.parse(localStorage.getItem('mis_comentarios')) || [];
       lista.forEach(texto => agregarAlDOM(texto));
     }
-
-    // Botón Me gusta básico
-    const likeBtn = document.querySelector('.like-btn');
-    const likeCount = document.querySelector('.like-count');
-    let likes = 0;
-    let liked = false;
-
-    likeBtn.addEventListener('click', () => {
-      liked = !liked;
-      likes = liked ? likes + 1 : likes - 1;
-      likeCount.textContent = likes;
-      likeBtn.classList.toggle('liked', liked);
-    });
   </script>
 
 </body>
