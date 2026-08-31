@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio - Drako Space</title>
+  <style>
+    body {
+      background-color: #0d0203;
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding-top: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #1a080a;
+      border-bottom: 1px solid #4a0e17;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 28px;
+      box-sizing: border-box;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #ef233c;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      margin-left: 15px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #ef233c;
+    }
+
+    .feed-container {
+      width: 90%;
+      max-width: 480px;
+    }
+
+    .post {
+      background-color: #1a080a;
+      border: 1px solid #4a0e17;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .post-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid #ef233c;
+      overflow: hidden;
+      margin-right: 12px;
+    }
+
+    .post-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .post-author h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .post-author span {
+      font-size: 0.8rem;
+      color: #ef233c;
+    }
+
+    .post-content {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #d1d1d1;
+      margin-bottom: 16px;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 16px;
+      border-top: 1px solid #2b0b10;
+      padding-top: 12px;
+    }
+
+    .action-btn {
+      background: none;
+      border: none;
+      color: #888;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      color: #ef233c;
+    }
+
+    /* Estilo para el botón de me gusta activo */
+    .action-btn.liked {
+      color: #ef233c;
+      transform: scale(1.05);
+    }
+
+    /* Sección de Comentarios */
+    .comments-section {
+      display: none; /* Oculta hasta hacer clic */
+      margin-top: 14px;
+      border-top: 1px dashed #4a0e17;
+      padding-top: 12px;
+    }
+
+    .comments-list {
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+    }
+
+    .comment-item {
+      background-color: #0d0203;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      border: 1px solid #2b0b10;
+    }
+
+    .comment-input-box {
+      display: flex;
+      gap: 8px;
+    }
+
+    .comment-input-box input {
+      flex: 1;
+      background-color: #0d0203;
+      border: 1px solid #4a0e17;
+      border-radius: 6px;
+      color: #fff;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .comment-input-box button {
+      background-color: #d90429;
+      border: none;
+      color: #fff;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">drako.space</div>
+    <nav>
+      <a href="feed.html">Inicio</a>
+      <a href="index.html">Mi Perfil</a>
+      <a href="registro.html">Registrarse</a>
+    </nav>
+  </header>
+
+  <main class="feed-container">
+
+    <article class="post">
+      <div class="post-header">
+        <div class="post-avatar">
+          <img src="foto.png.jpg" alt="Avatar">
+        </div>
+        <div class="post-author">
+          <h3>drako</h3>
+          <span>@drako</span>
+        </div>
+      </div>
+      <div class="post-content">
+        Construyendo mi propio espacio web desde cero. Código, estética roja y libertad total sin depender de nadie. 🩸✨
+      </div>
+      <div class="post-actions">
+        <button class="action-btn like-btn">♥ <span class="like-count">0</span> Me gusta</button>
+        <button class="action-btn comment-btn">💬 Comentar</button>
+      </div>
+
+      <div class="comments-section">
+        <div class="comments-list"></div>
+        <div class="comment-input-box">
+          <input type="text" placeholder="Escribe un comentario..." class="comment-input">
+          <button class="send-comment-btn">Enviar</button>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <script>
+    // 1. Funcionalidad de Me Gusta
+    const likeBtn = document.querySelector('.like-btn');
+    const likeCount = document.querySelector('.like-count');
+    let likes = 0;
+    let isLiked = false;
+
+    likeBtn.addEventListener('click', () => {
+      if (!isLiked) {
+        likes++;
+        isLiked = true;
+        likeBtn.classList.add('liked');
+      } else {
+        likes--;
+        isLiked = false;
+        likeBtn.classList.remove('liked');
+      }
+      likeCount.textContent = likes;
+    });
+
+    // 2. Mostrar/Ocultar Sección de Comentarios
+    const commentBtn = document.querySelector('.comment-btn');
+    const commentsSection = document.querySelector('.comments-section');
+
+    commentBtn.addEventListener('click', () => {
+      if (commentsSection.style.display === 'block') {
+        commentsSection.style.display = 'none';
+      } else {
+        commentsSection.style.display = 'block';
+      }
+    });
+
+    // 3. Agregar un Comentario Nuevo
+    const sendCommentBtn = document.querySelector('.send-comment-btn');
+    const commentInput = document.querySelector('.comment-input');
+    const commentsList = document.querySelector('.comments-list');
+
+    sendCommentBtn.addEventListener('click', () => {
+      const text = commentInput.value.trim();
+      if (text !== '') {
+        const newComment = document.createElement('div');
+        newComment.classList.add('comment-item');
+        newComment.innerHTML = `<strong>@usuario:</strong> ${text}`;
+        commentsList.appendChild(newComment);
+        commentInput.value = ''; // Limpiar el campo
+      }
+    });
+  </script>
+
+</body>
+</html>

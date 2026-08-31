@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Perfil - Drako</title>
+  <style>
+    /* Estilos globales */
+    body {
+      background-color: #0d0203; /* Fondo negro con matiz rojo muy oscuro */
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Tarjeta del perfil */
+    .card {
+      background-color: #1a080a; /* Rojo oscuro profundo */
+      border: 1px solid #4a0e17; /* Borde rojo vino */
+      border-radius: 16px;
+      padding: 24px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(239, 35, 60, 0.15); /* Resplandor rojo sutil */
+    }
+
+    /* Contenedor de la imagen / avatar */
+    .avatar-container {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto;
+      border-radius: 50%;
+      border: 3px solid #d90429; /* Borde rojo carmesí */
+      box-shadow: 0 0 15px rgba(217, 4, 41, 0.4);
+      overflow: hidden;
+      background-color: #2b0b10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin: 14px 0 4px 0;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+
+    p.username {
+      color: #ef233c; /* Texto del usuario en rojo brillante */
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .bio {
+      font-size: 0.85rem;
+      color: #d1d1d1;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    /* Botón decorativo estilo Tumblr */
+    .btn-follow {
+      background-color: #d90429;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .btn-follow:hover {
+      background-color: #ef233c;
+      transform: scale(1.03);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="avatar-container">
+      <!-- Asegúrate de tener tu imagen guardada en la misma carpeta como foto.jpg -->
+      <img src="foto.jpg" alt="" class="avatar">
+    </div>
+    <h1>daniel</h1>
+    <p class="username">@vampsunnn • fuck kast</p>
+    <p class="bio">el corazón a la izquierda y la sangre roja</p>
+    <button class="btn-follow">Seguir</button>
+  </div>
+
+</body>
+</html>
