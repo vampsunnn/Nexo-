@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Perfil - Drako Space</title>
+  <!-- Cargamos la librería de Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      background-color: #0d0203;
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding-top: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #1a080a;
+      border-bottom: 1px solid #4a0e17;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 28px;
+      box-sizing: border-box;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #ef233c;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      margin-left: 15px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #ef233c;
+    }
+
+    .profile-card {
+      background-color: #1a080a;
+      border: 1px solid #4a0e17;
+      border-radius: 16px;
+      padding: 30px 24px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(239, 35, 60, 0.15);
+    }
+
+    .avatar-container {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid #ef233c;
+      margin: 0 auto 16px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(239, 35, 60, 0.4);
+    }
+
+    .avatar-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-card h2 {
+      margin: 0 0 4px 0;
+      font-size: 1.4rem;
+    }
+
+    .profile-card p.username {
+      color: #ef233c;
+      margin: 0 0 16px 0;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .profile-info {
+      background-color: #0d0203;
+      border: 1px solid #2b0b10;
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 16px;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    .info-item {
+      margin-bottom: 8px;
+      color: #ccc;
+    }
+
+    .info-item strong {
+      color: #ffffff;
+    }
+
+    .btn-logout {
+      background-color: transparent;
+      border: 1px solid #ef233c;
+      color: #ef233c;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.2s;
+    }
+
+    .btn-logout:hover {
+      background-color: #ef233c;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">drako.space</div>
+    <nav>
+      <a href="feed.html">Inicio</a>
+      <a href="perfil.html">Mi Perfil</a>
+      <a href="index.html">Registro</a>
+    </nav>
+  </header>
+
+  <main class="profile-card">
+    <div class="avatar-container">
+      <img src="foto.png.jpg" alt="Avatar de perfil" id="avatarImg">
+    </div>
+
+    <h2 id="profileName">Cargando...</h2>
+    <p class="username" id="profileUsername">@cargando</p>
+
+    <div class="profile-info">
+      <div class="info-item"><strong>Correo:</strong> <span id="profileEmail">Cargando...</span></div>
+      <div class="info-item"><strong>Estado:</strong> <span style="color:#4EDA52;">● En línea</span></div>
+    </div>
+
+    <button class="btn-logout" id="logoutBtn">Cerrar Sesión</button>
+  </main>
+
+  <script>
+    const SUPABASE_URL = 'https://yootqehzqmvchmodpvadx.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_D9NHsuSDvZHwMllHpdydVw_pPNyV...'; // Asegúrate de pegar tu clave completa aquí
+
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function cargarPerfil() {
+      // 1. Obtener sesión del usuario actual
+      const { data: { user } } = await db.auth.getUser();
+
+      if (!user) {
+        // Si no ha iniciado sesión, enviarlo al registro/login
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // Mostrar correo
+      document.getElementById('profileEmail').textContent = user.email;
+
+      // 2. Consultar nombre de usuario desde la tabla 'perfiles'
+      const { data, error } = await db
+        .from('perfiles')
+        .select('username')
+        .eq('id', user.id)
+        .single();
+
+      if (data && data.username) {
+        document.getElementById('profileName').textContent = data.username;
+        document.getElementById('profileUsername').textContent = '@' + data.username;
+      } else {
+        const usernameLocal = localStorage.getItem('usuario_actual') || 'Usuario';
+        document.getElementById('profileName').textContent = usernameLocal;
+        document.getElementById('profileUsername').textContent = '@' + usernameLocal;
+      }
+    }
+
+    // Botón de Cerrar Sesión
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await db.auth.signOut();
+      localStorage.removeItem('usuario_actual');
+      window.location.href = 'index.html';
+    });
+
+    // Ejecutar al cargar la página
+    cargarPerfil();
+  </script>
+
+</body>
+</html>
