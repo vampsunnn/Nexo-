@@ -118,8 +118,7 @@
 
     <form action="feed.html">
       <div class="input-group">
-       const SUPABASE_URL = 'https://yootqehzqmvchmodpvadx.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_D9NHsuSDvZHwMllHpdydVw_pPNyV...'; // Pega aquí toda la clave pública que copiaste
+      
         <label for="username">Nombre de usuario</label>
         <input type="text" id="username" placeholder="@tuusuario" required>
       </div>
@@ -142,6 +141,44 @@ const SUPABASE_KEY = 'sb_publishable_D9NHsuSDvZHwMllHpdydVw_pPNyV...'; // Pega a
       ¿Ya tienes cuenta? <a href="feed.html">Inicia sesión</a>
     </div>
   </div>
+  </div> <!-- Cierre de register-card -->
+
+  <!-- AÑADE EL BLOQUE SCRIPT AQUÍ ABAJO -->
+  <script>
+    const SUPABASE_URL = 'https://yootqehzqmvchmodpvadx.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_D9NHsuSDvZHwMllHpdydVw_pPNyV...'; // Reemplaza por tu clave completa sin puntos suspensivos
+
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const username = document.getElementById('username').value.trim();
+
+      const { data, error } = await db.auth.signUp({
+        email: email,
+        password: password
+      });
+
+      if (error) {
+        alert("Error al registrar: " + error.message);
+        return;
+      }
+
+      if (data.user) {
+        await db.from('perfiles').insert([
+          { id: data.user.id, username: username }
+        ]);
+
+        localStorage.setItem('usuario_actual', username);
+        window.location.href = 'feed.html';
+      }
+    });
+  </script>
 
 </body>
 </html>
